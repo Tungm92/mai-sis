@@ -10,8 +10,9 @@
     <ul>
         {% for student in students %}
             <li>
-                <a href="{% url 'student-detail' student.id}" >{{ student.last_name }}, {{ student.first_name }}</a>
+                <a href="{% url 'student-detail' student.id %}" >{{ student.last_name }}, {{ student.first_name }}</a>
             </li>
         {% endfor %}
     </ul>
+    <a href="{% url 'student-create' %}" class="btn">Add a Student</a>
 {% endblock %}

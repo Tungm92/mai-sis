@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/form.css' %}" />
+{% endblock %} 
+{% block content %}
+    <div class="page-header">
+        {% if object %}
+            <h1>Edit {{ object.last_name }}, {{ object.first_name }}</h1>
+            <img src="{% static 'images/student-photo.jpg' %}" alt="student photo"/>
+        {% else %}
+            <h1>Add a Student</h1>
+            <img src="{% static 'images/student-silhouette.avif' %}" alt="a silhouette group of a kids standing together" />
+        {% endif %}
+    </div>
+  
+    <form action="" method="post" class="form-container">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <button type="submit" class="btn submit">Submit!</button>
+    </form>
+{% endblock %}

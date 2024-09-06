@@ -1,16 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 class Staffer(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    teacher = False
-    admininistrator = False
-    dean = False
-    counselor = False
+    teacher = models.BooleanField()
+    administrator = models.BooleanField()
+    dean = models.BooleanField()
+    counselor = models.BooleanField()
 
     def __str__(self):
         return self.user.username
+    
+    def get_absolute_url(self):
+        return reverse('staffer-detail', kwargs={'staffer_id':self.id})
+
     
 class Student(models.Model):
     last_name = models.CharField(max_length=24)
@@ -21,7 +26,10 @@ class Student(models.Model):
     eld = models.BooleanField() # how to make an enum?
 
     def __str__(self):
-        return self.first_name
+        return f'{self.last_name}, {self.first_name}'
+    
+    def get_absolute_url(self):
+        return reverse('student-detail', kwargs={'student_id':self.id})
 
     
 class Course(models.Model):
@@ -33,3 +41,6 @@ class Course(models.Model):
 
     def __str__(self):
         return self.course_title
+
+    def get_absolute_url(self):
+        return reverse('course-detail', kwargs={'course_id':self.id})

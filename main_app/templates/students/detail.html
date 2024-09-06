@@ -1,10 +1,36 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/students/'student-detail.css %}"/>
+    <link rel="stylesheet" href="{% static 'css/students/student-detail.css' %}"/>
 {% endblock %}
 {% block content %}
-    <h1>
-        
-    </h1>
+    <section class="student-container">
+        <h1> {{ student.last_name }}, {{ student.first_name }}</h1>
+        <div class="student-photo">
+            <img src="{% static 'images/student-photo.jpg' %}" alt="student photo"/>
+            <!-- create an if conidition to show the photo if the model has one -->
+        </div>
+        <div class="student-details">
+            <p>Grade: {{ student.grade }}</p>
+            {% if student.iep %}
+                <p>IEP: Confirmed </p>
+            {% else %}
+                <P>IEP: None </P>
+            {% endif %}
+            {% if student.plan504 %}
+                <p>504 Plan: Confirmed </p>
+            {% else %}
+                <P>504 Plan: None </P>
+            {% endif %}
+            {% if student.eld %}
+                <p>ELD: Confirmed </p>
+            {% else %}
+                <p>ELD: None </p>
+            {% endif %}
+        </div>
+        <div class="student-actions">
+            <a href="{% url 'student-update' student.id %}" class="btn warn">Edit</a>
+            <a href="{% url 'student-delete' student.id %}" class="btn danger">Delete</a>
+        </div>
+    </section>
 {% endblock %}

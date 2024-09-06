@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/staff/'staff-detail.css %}"/>
+    <link rel="stylesheet" href="{% static 'css/staff/staff-detail.css' %}"/>
 {% endblock %}
 {% block content %}
-    <h1></h1>
+    <section>
+        <h1> {{ staffer.user }}</h1>
+        <p>Staff details page</p>
+        <p>This should show a list of course this person teaches</p>
+        <ul>
+            <li>course title 1</li>
+        </ul>
+        <div class="staff-actions">
+            <a href="{% url 'staffer-update' staffer.id %}" class="btn warn">Edit</a>
+            <a href="{% url 'staffer-delete' staffer.id %}" class="btn danger">Delete</a>
+        </div>
+    </section>
+
 {% endblock %}

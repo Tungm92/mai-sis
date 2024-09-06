@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-    <link rel="stylesheet" href="{% static 'css/staff/'staff-index.css %}"/>
+    <link rel="stylesheet" href="{% static 'css/staff/staff-index.css' %}"/>
 {% endblock %}
 
 {% block content %}
@@ -10,7 +10,9 @@
     <ul>
         {% for staffer in staff %}
             <li>
-                {% staffer.name %}
+                <a href="{% url 'staffer-detail' staffer.id %}" >{{ staffer }}</a>
             </li>
+        {% endfor %}
     </ul>
+    <a href="{% url 'staffer-create' %}" class="btn">Add a staff member</a>
 {% endblock %}
