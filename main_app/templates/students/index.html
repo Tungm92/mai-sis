@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/students/student-index.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <h1>Students</h1>
+
+    <ul>
+        {% for student in students %}
+            <li>
+                <a href="{% url 'student-detail' student.id}" >{{ student.last_name }}, {{ student.first_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

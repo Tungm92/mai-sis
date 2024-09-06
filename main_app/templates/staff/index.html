@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/staff/'staff-index.css %}"/>
+{% endblock %}
+
+{% block content %}
+    <h1>Staff</h1>
+
+    <ul>
+        {% for staffer in staff %}
+            <li>
+                {% staffer.name %}
+            </li>
+    </ul>
+{% endblock %}
