@@ -7,9 +7,11 @@
     <section>
         <h1> {{ staffer.user }}</h1>
         <p>Staff details page</p>
-        <p>This should show a list of course this person teaches</p>
+        <p>This should show a list of courses this person teaches</p>
         <ul>
-            <li>course title 1</li>
+            {% for course in courses %}
+                <li>{{ course }}</li>
+            {% endfor %}
         </ul>
         <div class="staff-actions">
             <a href="{% url 'staffer-update' staffer.id %}" class="btn warn">Edit</a>

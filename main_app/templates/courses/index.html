@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/courses/course-index.css' %}"/>
+{% endblock %}
+
+{% block content %}
+    <h1>Courses</h1>
+
+    <ul>
+        {% for course in courses %}
+            <li>
+                <a href="{% url 'course-detail' course.id %}" >{{ course }} - {{ course.instructor }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'course-create' %}" class="btn">Add a course</a>
+{% endblock %}

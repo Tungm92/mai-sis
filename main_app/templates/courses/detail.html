@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/courses/course-detail.css' %}"/>
+{% endblock %}
+{% block content %}
+    <section>
+        <h1> {{ course.course_title }}</h1>
+        <p>Instructor: {{course.instructor}}</p>
+        <p>Roster: </p>
+        <ul>
+        </ul>
+        <div class="course-actions">
+            <a href="{% url 'course-update' course.id %}" class="btn warn">Edit</a>
+            <a href="{% url 'course-delete' course.id %}" class="btn danger">Delete</a>
+        </div>
+    </section>
+
+{% endblock %}

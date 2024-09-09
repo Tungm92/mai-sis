@@ -12,7 +12,7 @@ def about(request):
 
 def staff_index(request):
     staff = Staffer.objects.all()
-    return render(request, 'staff/index.html', { 'staff':staff })
+    return render(request, 'staff/index.html', { 'staff':staff})
 
 def staff_detail(request, staffer_id):
     staffer = Staffer.objects.get(id=staffer_id)
@@ -49,3 +49,23 @@ class StudentUpdate(UpdateView):
 class StudentDelete(DeleteView):
     model = Student
     success_url = '/students/'
+
+def courses_index(request):
+    courses = Course.objects.all()
+    return render(request, 'courses/index.html', { 'courses':courses })
+
+def course_detail(request, course_id):
+    course = Course.objects.get(id=course_id)
+    return render(request, 'courses/detail.html', { 'course':course })
+
+class CourseCreate(CreateView):
+    model = Course
+    fields = '__all__'
+
+class CourseUpdate(UpdateView):
+    model = Course
+    fields = '__all__'
+
+class CourseDelete(DeleteView):
+    model = Course
+    success_url = '/courses/'
