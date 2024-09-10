@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Staffer, Course, Student
+from django.contrib.auth.views import LoginView
+
 
 # Create your views here.
 
-def home(request):
-    return render(request, 'home.html')
+class Home(LoginView):
+    template_name = 'home.html'
 
 def about(request):
     return render(request, 'about.html')
@@ -56,11 +58,12 @@ def courses_index(request):
 
 def course_detail(request, course_id):
     course = Course.objects.get(id=course_id)
-    return render(request, 'courses/detail.html', { 'course':course })
+    students_not_on_roster = Student.objects.exclude(id__in = course.students.all().values_list('id'))
+    return render(request, 'courses/detail.html', { 'course':course, 'students':students_not_on_roster })
 
 class CourseCreate(CreateView):
     model = Course
-    fields = '__all__'
+    fields = ['instructor','title','subject','credits']
 
 class CourseUpdate(UpdateView):
     model = Course
@@ -69,3 +72,12 @@ class CourseUpdate(UpdateView):
 class CourseDelete(DeleteView):
     model = Course
     success_url = '/courses/'
+
+def associate_student(request, course_id, student_id):
+    Course.objects.get(id=course_id).students.add(student_id)
+    return redirect('course-detail', course_id=course_id)
+
+def remove_student(request, course_id, student_id):
+    course = Course.objects.get(id=course_id)
+    course.students.remove(student_id)
+    return redirect('course-detail', course_id=course_id)

@@ -11,7 +11,7 @@
             <!-- create an if conidition to show the photo if the model has one -->
         </div>
         <div class="student-details">
-            <p>Grade: {{ student.grade }}</p>
+            <p>Grade: {{ student.get_grade_display }}</p>
             {% if student.iep %}
                 <p>IEP: Confirmed </p>
             {% else %}
@@ -22,11 +22,7 @@
             {% else %}
                 <P>504 Plan: None </P>
             {% endif %}
-            {% if student.eld %}
-                <p>ELD: Confirmed </p>
-            {% else %}
-                <p>ELD: None </p>
-            {% endif %}
+            <p>ELD: {{student.get_eld_display}}</p>
         </div>
         <div class="student-actions">
             <a href="{% url 'student-update' student.id %}" class="btn warn">Edit</a>

@@ -2,7 +2,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.Home.as_view(), name='home'),
     path('about/', views.about, name='about'),
     path('staff/', views.staff_index, name='staff-index'),    
     path('staff/<int:staffer_id>/', views.staff_detail, name='staffer-detail'),
@@ -19,4 +19,8 @@ urlpatterns = [
     path('courses/create/', views.CourseCreate.as_view(), name='course-create'),
     path('courses/<int:pk>/update/', views.CourseUpdate.as_view(), name='course-update'),
     path('courses/<int:pk>/delete/', views.CourseDelete.as_view(), name='course-delete'),
+    path('courses/<int:course_id>/associate-student/<int:student_id>/', views.associate_student, name='associate-student'),
+    path('courses/<int:course_id>/remove-student/<int:student_id>/', views.remove_student, name='remove-student'),
+    path('accounts/', include('django.contrib.auth.urls')),
+
 ]
