@@ -6,24 +6,82 @@
 {% block content %}
     <section class="student-container">
         <h1> {{ student.last_name }}, {{ student.first_name }}</h1>
-        <div class="student-photo">
-            <img src="{% static 'images/student-photo.jpg' %}" alt="student photo"/>
-            <!-- create an if conidition to show the photo if the model has one -->
-        </div>
-        <div class="student-details">
-            <p>Grade: {{ student.get_grade_display }}</p>
-            {% if student.iep %}
-                <p>IEP: Confirmed </p>
-            {% else %}
-                <P>IEP: None </P>
-            {% endif %}
-            {% if student.plan504 %}
-                <p>504 Plan: Confirmed </p>
-            {% else %}
-                <P>504 Plan: None </P>
-            {% endif %}
-            <p>ELD: {{student.get_eld_display}}</p>
-        </div>
+        <section class="student-info">
+            <div class="student-photo">
+                <img src="{% static 'images/student-photo.jpg' %}" alt="student photo"/>
+                <!-- create an if conidition to show the photo if the model has one -->
+            </div>
+            <div class="subsection-content">
+                <p>Grade: {{ student.get_grade_display }}</p>
+                {% if student.iep %}
+                    <p>IEP: Confirmed </p>
+                {% else %}
+                    <P>IEP: None </P>
+                {% endif %}
+                {% if student.plan504 %}
+                    <p>504 Plan: Confirmed </p>
+                {% else %}
+                    <P>504 Plan: None </P>
+                {% endif %}
+                <p>ELD: {{student.get_eld_display}}</p>
+            </div>
+        </section>
+        <section class="schedule">
+            <div class="subsection-content">
+                <table>
+                    <thead>Current Courses
+                        <tr>
+                            <th>Course</th>
+                            <th>Subject</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in enrolled %}
+                            <tr>
+                                <td>{{course.title}}</td>
+                                <td>{{course.get_subject_display}}</td>
+                                <td>{{course.instructor}}</td>
+                                <td>
+                                    <form action="{% url 'remove-course' student.id course.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Unenroll</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </br>
+
+            <div class="subsection-content">
+                <table>
+                    <thead>Available Courses
+                        <tr>
+                            <th>Course</th>
+                            <th>Subject</th>
+                            <th>Instructor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in unenrolled %}
+                            <tr>
+                                <td>{{course.title}}</td>
+                                <td>{{course.get_subject_display}}</td>
+                                <td>{{course.instructor}}</td>
+                                <td>
+                                    <form action="{% url 'associate-course' student.id course.id %}" method="post">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn submit">Enroll</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
         <div class="student-actions">
             <a href="{% url 'student-update' student.id %}" class="btn warn">Edit</a>
             <a href="{% url 'student-delete' student.id %}" class="btn danger">Delete</a>

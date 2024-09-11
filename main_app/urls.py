@@ -14,6 +14,8 @@ urlpatterns = [
     path('students/create/', views.StudentCreate.as_view(), name='student-create'),
     path('students/<int:pk>/update/', views.StudentUpdate.as_view(), name='student-update'),
     path('students/<int:pk>/delete/', views.StudentDelete.as_view(), name='student-delete'),
+    path('students/<int:student_id>/associate-course/<int:course_id>/', views.associate_course, name='associate-course'),
+    path('students/<int:student_id>/remove-course/<int:course_id>/', views.remove_course, name='remove-course'),
     path('courses/', views.courses_index, name='course-index'),
     path('courses/<int:course_id>/', views.course_detail, name='course-detail'),
     path('courses/create/', views.CourseCreate.as_view(), name='course-create'),
@@ -22,5 +24,5 @@ urlpatterns = [
     path('courses/<int:course_id>/associate-student/<int:student_id>/', views.associate_student, name='associate-student'),
     path('courses/<int:course_id>/remove-student/<int:student_id>/', views.remove_student, name='remove-student'),
     path('accounts/', include('django.contrib.auth.urls')),
-
+    path('accounts/signup/', views.signup, name='signup'),
 ]
