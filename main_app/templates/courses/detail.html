@@ -21,6 +21,7 @@
                             <tr>
                                 <th>Last Name</th>
                                 <th>First Name</th>
+                                <th>Grade Level</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,7 @@
                                 <tr>
                                     <td>{{student.last_name}}</td>
                                     <td>{{student.first_name}}</td>
+                                    <td>{{student.grade}}</td>
                                     {% if course.instructor == request.user.staffer %}
                                     <td>
                                         <form action="{% url 'remove-student' course.id student.id %}" method="post">
@@ -58,6 +60,7 @@
                             <tr>
                                 <th>Last Name</th>
                                 <th>First Name</th>
+                                <th>Grade Level</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,11 +68,12 @@
                                 <tr>
                                     <td>{{student.last_name}}</td>
                                     <td>{{student.first_name}}</td>
+                                    <td>{{student.grade}}</td>
                                     {% if course.instructor == request.user.staffer %}
                                     <td>
                                         <form action="{% url 'associate-student' course.id student.id %}" method="post">
                                             {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">Unenroll</button>
+                                            <button type="submit" class="btn btn-danger">Enroll</button>
                                         </form>
                                     </td>
                                     {% endif %}

@@ -9,9 +9,13 @@
 
     <ul>
         {% for course in courses %}
+            {% if course.instructor == request.user.staffer %}
             <li>
                 <a href="{% url 'course-detail' course.id %}" >{{ course.title }} - {{ course.instructor }}</a>
             </li>
+            {% else %}
+            <li>{{ course.title }} - {{ course.instructor }}</li>
+            {% endif %}
         {% endfor %}
     </ul>
     <a href="{% url 'course-create' %}" class="btn">Add a course</a>

@@ -77,7 +77,7 @@ class StudentDelete(DeleteView):
 
 @login_required
 def courses_index(request):
-    courses = Course.objects.filter(instructor=request.user.staffer)
+    courses = Course.objects.order_by('title')
     return render(request, 'courses/index.html', { 'courses':courses })
 
 @login_required
