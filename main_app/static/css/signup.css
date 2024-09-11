@@ -1,8 +1,11 @@
+section {
+    display: flex;
+    max-width: 800px;
+}
+
 img {
     display: flex;
     margin-left: auto;
     margin-right: auto;
     width: 50%;
-    flex-wrap: wrap;
-    object-fit: contain;
 }

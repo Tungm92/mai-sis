@@ -2,18 +2,19 @@
 {% load static %}
 {% block head %}
     <link rel="stylesheet" href="{% static 'css/home.css'}"/>
+    <link rel="stylesheet" href="{% static 'css/form.css'}"/>
+
 {% endblock %}
 
 {% block content %}
-<h1>Mai SIS</h1>
-<hr />
-<p class="page-content">
-    This is the home page
-</p>
+<section class="image-container">
+    <img src="{% static 'images/banner_1200x600.png' %}" alt="a banner saying 'Register Today with Mai SIS" />
+</section>
+
 
 {% if not user.is_authenticated %}
 <section>
-    <form action="{% url 'home' %}" method="post" class="login">
+    <form class="form-container" action="{% url 'home' %}" method="post" class="login">
       <h1>Login</h1>
       {% csrf_token %} {{ form.as_p }}
       <input type="hidden" name="next" value="{{ next }}" />
@@ -21,5 +22,4 @@
     </form>
 </section>
 {% endif %}
-
 {% endblock %}
