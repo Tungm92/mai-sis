@@ -36,7 +36,8 @@ def staff_index(request):
 @login_required
 def staff_detail(request, staffer_id):
     staffer = Staffer.objects.get(id=staffer_id)
-    return render(request, 'staff/detail.html', { 'staffer':staffer })
+    courses = Course.objects.filter(instructor=staffer)
+    return render(request, 'staff/detail.html', { 'staffer':staffer, 'courses':courses })
 
 class StafferCreate(CreateView):
     model = Staffer
@@ -82,8 +83,9 @@ def courses_index(request):
 @login_required
 def course_detail(request, course_id):
     course = Course.objects.get(id=course_id)
-    students_not_on_roster = Student.objects.exclude(id__in = course.students.all().values_list('id'))
-    return render(request, 'courses/detail.html', { 'course':course, 'students':students_not_on_roster })
+    enrolled = course.students.order_by('last_name')
+    students_not_on_roster = Student.objects.exclude(id__in = course.students.all().values_list('id')).order_by('last_name')
+    return render(request, 'courses/detail.html', { 'course':course, 'students':students_not_on_roster, 'enrolled':enrolled })
 
 class CourseCreate(CreateView):
     model = Course

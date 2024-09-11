@@ -5,18 +5,26 @@
 {% endblock %}
 {% block content %}
     <section>
-        <h1> {{ staffer.user }}</h1>
+        <h1> {{ staffer }}</h1>
         <p>Staff details page</p>
         <p>This should show a list of courses this person teaches</p>
         <ul>
             {% for course in courses %}
-                <li>{{ course }}</li>
+                {% if course.instructor == request.user.staffer %}
+                    <li>
+                        <a href="{% url 'course-detail' course.id %}">{{ course.title }} - {{ course.get_subject_display }}</a>
+                    </li>
+                {% else %}
+                    <li>{{ course.title }} - {{ course.get_subject_display }}</li>
+                {% endif %}
             {% endfor %}
         </ul>
+        {% if staffer == request.user.staffer %}
         <div class="staff-actions">
             <a href="{% url 'staffer-update' staffer.id %}" class="btn warn">Edit</a>
             <a href="{% url 'staffer-delete' staffer.id %}" class="btn danger">Delete</a>
         </div>
+        {% endif %}
     </section>
 
 {% endblock %}

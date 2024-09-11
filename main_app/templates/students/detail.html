@@ -25,7 +25,12 @@
                 {% endif %}
                 <p>ELD: {{student.get_eld_display}}</p>
             </div>
+            <div class="student-actions">
+                <a href="{% url 'student-update' student.id %}" class="btn warn">Edit Details</a>
+                <a href="{% url 'student-delete' student.id %}" class="btn danger">Delete Student</a>
+            </div>
         </section>
+        </br>
         <section class="schedule">
             <div class="subsection-content">
                 <table>
@@ -42,12 +47,14 @@
                                 <td>{{course.title}}</td>
                                 <td>{{course.get_subject_display}}</td>
                                 <td>{{course.instructor}}</td>
+                                {% if course.instructor == request.user.staffer %}
                                 <td>
                                     <form action="{% url 'remove-course' student.id course.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-danger">Unenroll</button>
                                     </form>
                                 </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -70,21 +77,19 @@
                                 <td>{{course.title}}</td>
                                 <td>{{course.get_subject_display}}</td>
                                 <td>{{course.instructor}}</td>
+                                {% if course.instructor == request.user.staffer %}
                                 <td>
                                     <form action="{% url 'associate-course' student.id course.id %}" method="post">
                                         {% csrf_token %}
                                         <button type="submit" class="btn submit">Enroll</button>
                                     </form>
                                 </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </section>
-        <div class="student-actions">
-            <a href="{% url 'student-update' student.id %}" class="btn warn">Edit</a>
-            <a href="{% url 'student-delete' student.id %}" class="btn danger">Delete</a>
-        </div>
     </section>
 {% endblock %}

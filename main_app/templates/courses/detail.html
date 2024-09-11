@@ -6,58 +6,88 @@
 {% block content %}
     <section>
         <h1>{{ course.title }}</h1>
+        {% if course.instructor == request.user.staffer %}
         <div class="course-actions">
             <a href="{% url 'course-update' course.id %}" class="btn warn">Edit Details</a>
             <a href="{% url 'course-delete' course.id %}" class="btn danger">Delete Course</a>
         </div>
+        {% endif %}
         <p>Instructor: {{course.instructor}}</p>
         <section class="roster">
             <div class="subsection-content">
-                <table>
-                    <thead>Roster: 
-                        <tr>
-                            <th>Last Name</th>
-                            <th>First Name</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for student in course.students.all %}
+                {% if enrolled %}
+                    <table>
+                        <thead>Roster: 
                             <tr>
-                                <td>{{student.last_name}}</td>
-                                <td>{{student.first_name}}</td>
-                                <td>
-                                    <form action="{% url 'remove-student' course.id student.id %}" method="post">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger">Unenroll</button>
-                                    </form>
-                                </td>
+                                <th>Last Name</th>
+                                <th>First Name</th>
                             </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {% for student in enrolled %}
+                                <tr>
+                                    <td>{{student.last_name}}</td>
+                                    <td>{{student.first_name}}</td>
+                                    {% if course.instructor == request.user.staffer %}
+                                    <td>
+                                        <form action="{% url 'remove-student' course.id student.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Unenroll</button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <table>
+                        <thead>Roster:
+                            <tr>
+                                <td>No students are enrolled in this course.</td>
+                            </tr>
+                        </thead>
+                    </table>
+                {% endif %}
             </div>
-
-            <h3>Students not Enrolled</h3>
+            </br>
             <div class="subsection-content">
                 {% if students %}
-                    <ul>
-                        {% for student in students %}
-                            <div class="student-container">
-                                <p>{{student}}</p>
-                                <form action="{% url 'associate-student' course.id student.id %}" method="post">
-                                    {% csrf_token %}
-                                    <button type="submit" class="btn submit">Enroll</button>
-                                </form>
-                            </div>
-                        {% endfor %}
-                    </ul>
+                    <table>
+                        <thead>Unenrolled Students: 
+                            <tr>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td>{{student.last_name}}</td>
+                                    <td>{{student.first_name}}</td>
+                                    {% if course.instructor == request.user.staffer %}
+                                    <td>
+                                        <form action="{% url 'associate-student' course.id student.id %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-danger">Unenroll</button>
+                                        </form>
+                                    </td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 {% else %}
-                    <p>All students are enrolled in this course</p>
+                    <table>
+                        <thead>Unenrolled Students:
+                            <tr>
+                                <td>All students are enrolled in this course</td>
+                            </tr>
+                        </thead>
+                    </table>
                 {% endif %}
             </div>
         </section>
-
-
-
     </section>
 {% endblock %}
+
