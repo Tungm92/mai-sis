@@ -24,10 +24,10 @@ Mai SIS is not necessarily doing anything new -- it's working to do it better!
 ## Attributions 👨🏻‍💻
 No Attributes
 
-## Language Used 📝
-Python
-Django
-Postgresql
+## Technology Used 📝
+- Python
+- Django
+- Postgresql
 
 ## Next Step 👉🏼
 - improve CSS
